@@ -27,10 +27,8 @@
                                Margin="0,8,0,0" />
                 </StackPanel>
 
-                <Border Style="{DynamicResource ModernCard}"
-                        Padding="24"
-                        Margin="0,24,0,0">
-                    <StackPanel>
+                <StackPanel Margin="0,24,0,0" Spacing="24">
+                    <Border Style="{DynamicResource ModernCard}" Padding="24">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -65,55 +63,177 @@
                                     Command="{Binding RefreshCommand}"
                                     Style="{StaticResource ModernOutlineButton}" />
                         </Grid>
+                    </Border>
 
-                        <Grid Margin="0,16,0,0">
-                            <DataGrid ItemsSource="{Binding Reservations}"
-                                      AutoGenerateColumns="False"
-                                      HeadersVisibility="Column"
-                                      GridLinesVisibility="Horizontal"
-                                      IsReadOnly="True"
-                                      RowHeight="44"
-                                      Background="Transparent"
-                                      RowBackground="Transparent"
-                                      AlternatingRowBackground="{DynamicResource MutedBackgroundBrush}"
-                                      BorderThickness="0"
-                                      CanUserAddRows="False"
-                                      CanUserDeleteRows="False"
-                                      CanUserReorderColumns="False">
-                                <DataGrid.Resources>
-                                    <Style TargetType="DataGridColumnHeader">
-                                        <Setter Property="Background" Value="{DynamicResource MutedBackgroundBrush}" />
-                                        <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
-                                        <Setter Property="FontWeight" Value="SemiBold" />
-                                        <Setter Property="BorderBrush" Value="Transparent" />
-                                        <Setter Property="Padding" Value="12,10" />
-                                    </Style>
-                                </DataGrid.Resources>
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60" />
-                                    <DataGridTextColumn Header="User" Binding="{Binding UserId}" Width="100" />
-                                    <DataGridTextColumn Header="Vehicle" Binding="{Binding VehicleId}" Width="100" />
-                                    <DataGridTextColumn Header="Start" Binding="{Binding StartDateDisplay}" Width="120" />
-                                    <DataGridTextColumn Header="End" Binding="{Binding EndDateDisplay}" Width="120" />
-                                    <DataGridTextColumn Header="Duration" Binding="{Binding DurationDays}" Width="90" />
-                                    <DataGridTextColumn Header="Total" Binding="{Binding TotalAmountDisplay}" Width="120" />
-                                    <DataGridTemplateColumn Header="Status" Width="150">
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Border Background="{DynamicResource SidebarAccentBrush}"
-                                                        CornerRadius="{DynamicResource CornerRadiusMedium}"
-                                                        Padding="8,4"
-                                                        HorizontalAlignment="Left">
-                                                    <TextBlock Text="{Binding StatusDisplay}"
-                                                               FontWeight="SemiBold"
-                                                               Foreground="{DynamicResource TextPrimaryBrush}" />
-                                                </Border>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
-                                    <DataGridTextColumn Header="Notes" Binding="{Binding Notes}" Width="200" />
-                                </DataGrid.Columns>
-                            </DataGrid>
+                    <Border Style="{DynamicResource ModernCard}" Padding="0">
+                        <Grid>
+                            <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                                <ItemsControl ItemsSource="{Binding Reservations}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemContainerStyle>
+                                        <Style TargetType="ContentPresenter">
+                                            <Setter Property="Margin" Value="0,0,0,12" />
+                                        </Style>
+                                    </ItemsControl.ItemContainerStyle>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Background="{DynamicResource CardBackgroundBrush}"
+                                                    CornerRadius="{DynamicResource CornerRadiusMedium}"
+                                                    Padding="24"
+                                                    BorderBrush="{DynamicResource DividerBrush}"
+                                                    BorderThickness="1"
+                                                    Margin="0,0,0,0">
+                                                <StackPanel>
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <StackPanel>
+                                                            <TextBlock Text="{Binding VehicleDisplay}"
+                                                                       FontSize="20"
+                                                                       FontWeight="SemiBold"
+                                                                       Foreground="{DynamicResource TextPrimaryBrush}" />
+                                                            <TextBlock Text="{Binding ReservationNumberDisplay}"
+                                                                       Margin="0,4,0,0"
+                                                                       Foreground="{DynamicResource TextSecondaryBrush}" />
+                                                        </StackPanel>
+
+                                                        <Border Grid.Column="1"
+                                                                HorizontalAlignment="Right"
+                                                                Background="{DynamicResource SidebarAccentBrush}"
+                                                                CornerRadius="{DynamicResource CornerRadiusMedium}"
+                                                                Padding="12,4">
+                                                            <Border.Style>
+                                                                <Style TargetType="Border">
+                                                                    <Setter Property="Background" Value="{DynamicResource SidebarAccentBrush}" />
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding Status}" Value="Pending">
+                                                                            <Setter Property="Background" Value="{DynamicResource WarningBrush}" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding Status}" Value="Confirmed">
+                                                                            <Setter Property="Background" Value="{DynamicResource SuccessBrush}" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding Status}" Value="Completed">
+                                                                            <Setter Property="Background" Value="{DynamicResource PrimaryBrush}" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding Status}" Value="Cancelled">
+                                                                            <Setter Property="Background" Value="{DynamicResource DestructiveBrush}" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Border.Style>
+                                                            <TextBlock Text="{Binding StatusDisplay}"
+                                                                       FontWeight="SemiBold">
+                                                                <TextBlock.Style>
+                                                                    <Style TargetType="TextBlock">
+                                                                        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding Status}" Value="Pending">
+                                                                                <Setter Property="Foreground" Value="{DynamicResource PrimaryForegroundBrush}" />
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding Status}" Value="Confirmed">
+                                                                                <Setter Property="Foreground" Value="{DynamicResource PrimaryForegroundBrush}" />
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding Status}" Value="Completed">
+                                                                                <Setter Property="Foreground" Value="{DynamicResource PrimaryForegroundBrush}" />
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding Status}" Value="Cancelled">
+                                                                                <Setter Property="Foreground" Value="{DynamicResource DestructiveForegroundBrush}" />
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </TextBlock.Style>
+                                                            </TextBlock>
+                                                        </Border>
+                                                    </Grid>
+
+                                                    <Grid Margin="0,24,0,0">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <StackPanel Grid.Column="0">
+                                                            <TextBlock Text="Rental period"
+                                                                       FontSize="12"
+                                                                       Foreground="{DynamicResource TextSecondaryBrush}" />
+                                                            <TextBlock Text="{Binding RentalPeriodDisplay}"
+                                                                       FontSize="16"
+                                                                       FontWeight="SemiBold" />
+                                                        </StackPanel>
+
+                                                        <StackPanel Grid.Column="1">
+                                                            <TextBlock Text="Renter"
+                                                                       FontSize="12"
+                                                                       Foreground="{DynamicResource TextSecondaryBrush}" />
+                                                            <TextBlock Text="{Binding UserDisplay}"
+                                                                       FontSize="16"
+                                                                       FontWeight="SemiBold" />
+                                                        </StackPanel>
+
+                                                        <StackPanel Grid.Column="2">
+                                                            <TextBlock Text="Total price"
+                                                                       FontSize="12"
+                                                                       Foreground="{DynamicResource TextSecondaryBrush}" />
+                                                            <TextBlock Text="{Binding TotalAmountDisplay}"
+                                                                       FontSize="18"
+                                                                       FontWeight="Bold"
+                                                                       Foreground="{DynamicResource PrimaryBrush}" />
+                                                        </StackPanel>
+                                                    </Grid>
+
+                                                    <Grid Margin="0,16,0,0">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <StackPanel Grid.Column="0">
+                                                            <TextBlock Text="Duration"
+                                                                       FontSize="12"
+                                                                       Foreground="{DynamicResource TextSecondaryBrush}" />
+                                                            <TextBlock Text="{Binding DurationDisplay}"
+                                                                       FontSize="16"
+                                                                       FontWeight="SemiBold" />
+                                                        </StackPanel>
+
+                                                        <StackPanel Grid.Column="1">
+                                                            <TextBlock Text="Vehicle"
+                                                                       FontSize="12"
+                                                                       Foreground="{DynamicResource TextSecondaryBrush}" />
+                                                            <TextBlock Text="{Binding VehicleId}"
+                                                                       FontSize="16"
+                                                                       FontWeight="SemiBold" />
+                                                        </StackPanel>
+                                                    </Grid>
+
+                                                    <Border Margin="0,16,0,0"
+                                                            Background="{DynamicResource MutedBackgroundBrush}"
+                                                            Padding="16"
+                                                            CornerRadius="{DynamicResource CornerRadiusMedium}"
+                                                            Visibility="{Binding HasNotes, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                                        <StackPanel>
+                                                            <TextBlock Text="Notes"
+                                                                       FontSize="12"
+                                                                       Foreground="{DynamicResource TextSecondaryBrush}" />
+                                                            <TextBlock Text="{Binding NotesDisplay}"
+                                                                       TextWrapping="Wrap"
+                                                                       Margin="0,4,0,0" />
+                                                        </StackPanel>
+                                                    </Border>
+                                                </StackPanel>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
 
                             <Border Background="{DynamicResource OverlayBrush}"
                                     Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
@@ -129,39 +249,37 @@
                                 </Border>
                             </Border>
                         </Grid>
+                    </Border>
 
-                        <Border Background="{DynamicResource DestructiveBrush}"
-                                CornerRadius="{DynamicResource CornerRadiusMedium}"
-                                Padding="12"
-                                Margin="0,8,0,0"
-                                Visibility="{Binding ErrorMessage, Converter={StaticResource StringNullToVisibilityConverter}}">
-                            <TextBlock Text="{Binding ErrorMessage}"
-                                       Foreground="{DynamicResource DestructiveForegroundBrush}"
-                                       FontWeight="SemiBold" />
-                        </Border>
+                    <Border Background="{DynamicResource DestructiveBrush}"
+                            CornerRadius="{DynamicResource CornerRadiusMedium}"
+                            Padding="12"
+                            Visibility="{Binding ErrorMessage, Converter={StaticResource StringNullToVisibilityConverter}}">
+                        <TextBlock Text="{Binding ErrorMessage}"
+                                   Foreground="{DynamicResource DestructiveForegroundBrush}"
+                                   FontWeight="SemiBold" />
+                    </Border>
 
-                        <Border Background="{DynamicResource MutedBackgroundBrush}"
-                                CornerRadius="{DynamicResource CornerRadiusMedium}"
-                                Padding="24"
-                                HorizontalAlignment="Stretch"
-                                Margin="0,16,0,0">
-                            <Border.Style>
-                                <Style TargetType="Border">
-                                    <Setter Property="Visibility" Value="Collapsed" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Reservations.Count}" Value="0">
-                                            <Setter Property="Visibility" Value="Visible" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
-                            <TextBlock Text="{DynamicResource Admin_Table_NoData}"
-                                       HorizontalAlignment="Center"
-                                       Foreground="{DynamicResource TextSecondaryBrush}"
-                                       FontSize="14" />
-                        </Border>
-                    </StackPanel>
-                </Border>
+                    <Border Background="{DynamicResource MutedBackgroundBrush}"
+                            CornerRadius="{DynamicResource CornerRadiusMedium}"
+                            Padding="24"
+                            HorizontalAlignment="Stretch">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Reservations.Count}" Value="0">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        <TextBlock Text="{DynamicResource Admin_Table_NoData}"
+                                   HorizontalAlignment="Center"
+                                   Foreground="{DynamicResource TextSecondaryBrush}"
+                                   FontSize="14" />
+                    </Border>
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
     </Grid>

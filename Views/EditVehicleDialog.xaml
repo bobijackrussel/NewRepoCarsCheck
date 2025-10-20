@@ -1,11 +1,11 @@
-<Window x:Class="CarRentalManagment.Views.AddVehicleDialog"
+<Window x:Class="CarRentalManagment.Views.EditVehicleDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converters="clr-namespace:CarRentalManagment.Utilities.Converters"
         mc:Ignorable="d"
-        Title="Add vehicle"
+        Title="Edit vehicle"
         WindowStartupLocation="CenterOwner"
         SizeToContent="WidthAndHeight"
         ResizeMode="NoResize"
@@ -24,11 +24,11 @@
             BorderThickness="1">
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <StackPanel>
-                <TextBlock Text="Add a new vehicle"
+                <TextBlock Text="{Binding DialogTitle}"
                            FontSize="24"
                            FontWeight="Bold"
                            Foreground="{DynamicResource TextPrimaryBrush}" />
-                <TextBlock Text="Provide the details for the vehicle you want to add to the fleet."
+                <TextBlock Text="{Binding DialogDescription}"
                            Margin="0,6,0,20"
                            Foreground="{DynamicResource TextSecondaryBrush}" />
 
@@ -192,7 +192,7 @@
                     <Button Content="Cancel"
                             Command="{Binding CancelCommand}"
                             Style="{StaticResource ModernOutlineButton}" />
-                    <Button Content="Save vehicle"
+                    <Button Content="{Binding PrimaryButtonText}"
                             Command="{Binding SaveCommand}"
                             Style="{StaticResource ModernPrimaryButton}"
                             Margin="12,0,0,0" />

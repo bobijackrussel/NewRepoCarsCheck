@@ -1,0 +1,96 @@
+<Window x:Class="CarRentalManagment.Views.Admin.LocationEditorDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converters="clr-namespace:CarRentalManagment.Utilities.Converters"
+        mc:Ignorable="d"
+        Title="Location"
+        WindowStartupLocation="CenterOwner"
+        SizeToContent="WidthAndHeight"
+        ResizeMode="NoResize"
+        Background="{DynamicResource PageBackgroundBrush}"
+        d:DesignWidth="520"
+        d:DesignHeight="560">
+
+    <Window.Resources>
+        <converters:StringNullOrEmptyToVisibilityConverter x:Key="StringNullOrEmptyToVisibilityConverter" />
+    </Window.Resources>
+
+    <Border Background="{DynamicResource CardBackgroundBrush}"
+            CornerRadius="16"
+            Padding="28"
+            BorderBrush="{DynamicResource DividerBrush}"
+            BorderThickness="1">
+        <StackPanel>
+            <TextBlock Text="{Binding Title}"
+                       FontSize="24"
+                       FontWeight="Bold"
+                       Foreground="{DynamicResource TextPrimaryBrush}" />
+            <TextBlock Text="{Binding Description}"
+                       Margin="0,6,0,20"
+                       Foreground="{DynamicResource TextSecondaryBrush}" />
+
+            <StackPanel Margin="0,0,0,16">
+                <TextBlock Text="Location name"
+                           FontSize="12"
+                           Foreground="{DynamicResource TextSecondaryBrush}" />
+                <TextBox Style="{StaticResource ModernTextBox}"
+                         Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+
+            <StackPanel Margin="0,0,0,16">
+                <TextBlock Text="Subtitle"
+                           FontSize="12"
+                           Foreground="{DynamicResource TextSecondaryBrush}" />
+                <TextBox Style="{StaticResource ModernTextBox}"
+                         Text="{Binding Subtitle, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+
+            <Grid Margin="0,0,0,16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Margin="0,0,12,0">
+                    <TextBlock Text="Fleet size"
+                               FontSize="12"
+                               Foreground="{DynamicResource TextSecondaryBrush}" />
+                    <TextBox Style="{StaticResource ModernTextBox}"
+                             Text="{Binding FleetCount, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="1">
+                    <TextBlock Text="Utilization (%)"
+                               FontSize="12"
+                               Foreground="{DynamicResource TextSecondaryBrush}" />
+                    <TextBox Style="{StaticResource ModernTextBox}"
+                             Text="{Binding Utilization, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+            </Grid>
+
+            <CheckBox Content="Location is active"
+                      IsChecked="{Binding IsActive}"
+                      Margin="0,0,0,16"
+                      Foreground="{DynamicResource TextPrimaryBrush}" />
+
+            <TextBlock Text="{Binding ErrorMessage}"
+                       Foreground="{DynamicResource DestructiveBrush}"
+                       Visibility="{Binding ErrorMessage, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}}"
+                       TextWrapping="Wrap"
+                       Margin="0,0,0,12" />
+
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <Button Content="Cancel"
+                        Command="{Binding CancelCommand}"
+                        Style="{StaticResource ModernOutlineButton}" />
+                <Button Content="{Binding PrimaryButtonText}"
+                        Command="{Binding SaveCommand}"
+                        Style="{StaticResource ModernPrimaryButton}"
+                        Margin="12,0,0,0" />
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</Window>
