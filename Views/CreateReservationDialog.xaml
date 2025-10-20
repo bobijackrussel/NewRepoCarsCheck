@@ -9,7 +9,7 @@
         WindowStartupLocation="CenterOwner"
         SizeToContent="WidthAndHeight"
         ResizeMode="NoResize"
-        Background="{StaticResource MutedBackgroundBrush}"
+        Background="{DynamicResource PageBackgroundBrush}"
         d:DesignWidth="560"
         d:DesignHeight="640">
 
@@ -19,26 +19,26 @@
         <converters:StringNullOrEmptyToVisibilityConverter x:Key="StringNullOrEmptyToVisibilityConverter" />
     </Window.Resources>
 
-    <Border Background="White"
+    <Border Background="{DynamicResource CardBackgroundBrush}"
             CornerRadius="16"
             Padding="28"
-            BorderBrush="#FFE1E5FB"
+            BorderBrush="{DynamicResource DividerBrush}"
             BorderThickness="1">
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <StackPanel>
                 <TextBlock Text="Create a reservation"
                            FontSize="24"
                            FontWeight="Bold"
-                           Foreground="{StaticResource ForegroundBrush}" />
+                           Foreground="{DynamicResource TextPrimaryBrush}" />
                 <TextBlock Text="Choose a vehicle and select the dates for your rental."
                            Margin="0,6,0,20"
-                           Foreground="{StaticResource MutedForegroundBrush}" />
+                           Foreground="{DynamicResource TextSecondaryBrush}" />
 
                 <StackPanel Margin="0,0,0,16"
                             Visibility="{Binding ShowVehicleSelector, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <TextBlock Text="Vehicle"
                                FontSize="12"
-                               Foreground="{StaticResource MutedForegroundBrush}" />
+                               Foreground="{DynamicResource TextSecondaryBrush}" />
                     <ComboBox ItemsSource="{Binding AvailableVehicles}"
                               SelectedItem="{Binding SelectedVehicle}"
                               DisplayMemberPath="DisplayName"
@@ -49,15 +49,15 @@
                             Visibility="{Binding ShowVehicleSelector, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
                     <TextBlock Text="Vehicle"
                                FontSize="12"
-                               Foreground="{StaticResource MutedForegroundBrush}" />
-                    <Border Background="#FFE7EAFF"
-                            BorderBrush="#FFE1E5FB"
+                               Foreground="{DynamicResource TextSecondaryBrush}" />
+                    <Border Background="{DynamicResource MutedBackgroundBrush}"
+                            BorderBrush="{DynamicResource DividerBrush}"
                             BorderThickness="1"
                             CornerRadius="12"
                             Padding="12">
                         <TextBlock Text="{Binding SelectedVehicle.DisplayName}"
                                    FontWeight="SemiBold"
-                                   Foreground="{StaticResource ForegroundBrush}" />
+                                   Foreground="{DynamicResource TextPrimaryBrush}" />
                     </Border>
                 </StackPanel>
 
@@ -70,24 +70,48 @@
                     <StackPanel Grid.Column="0" Margin="0,0,12,0">
                         <TextBlock Text="Start date"
                                    FontSize="12"
-                                   Foreground="{StaticResource MutedForegroundBrush}" />
+                                   Foreground="{DynamicResource TextSecondaryBrush}" />
                         <DatePicker SelectedDate="{Binding StartDate, Mode=TwoWay}"
-                                     />
+                                    BorderBrush="{DynamicResource InputBorderBrush}"
+                                    Foreground="{DynamicResource InputForegroundBrush}">
+                            <DatePicker.Resources>
+                                <Style TargetType="DatePickerTextBox">
+                                    <Setter Property="Background" Value="{DynamicResource InputBackgroundBrush}" />
+                                    <Setter Property="Foreground" Value="{DynamicResource InputForegroundBrush}" />
+                                    <Setter Property="BorderBrush" Value="{DynamicResource InputBorderBrush}" />
+                                    <Setter Property="BorderThickness" Value="1" />
+                                    <Setter Property="Padding" Value="10,6" />
+                                    <Setter Property="FontSize" Value="14" />
+                                </Style>
+                            </DatePicker.Resources>
+                        </DatePicker>
                     </StackPanel>
 
                     <StackPanel Grid.Column="1">
                         <TextBlock Text="End date"
                                    FontSize="12"
-                                   Foreground="{StaticResource MutedForegroundBrush}" />
+                                   Foreground="{DynamicResource TextSecondaryBrush}" />
                         <DatePicker SelectedDate="{Binding EndDate, Mode=TwoWay}"
-                                     />
+                                    BorderBrush="{DynamicResource InputBorderBrush}"
+                                    Foreground="{DynamicResource InputForegroundBrush}">
+                            <DatePicker.Resources>
+                                <Style TargetType="DatePickerTextBox">
+                                    <Setter Property="Background" Value="{DynamicResource InputBackgroundBrush}" />
+                                    <Setter Property="Foreground" Value="{DynamicResource InputForegroundBrush}" />
+                                    <Setter Property="BorderBrush" Value="{DynamicResource InputBorderBrush}" />
+                                    <Setter Property="BorderThickness" Value="1" />
+                                    <Setter Property="Padding" Value="10,6" />
+                                    <Setter Property="FontSize" Value="14" />
+                                </Style>
+                            </DatePicker.Resources>
+                        </DatePicker>
                     </StackPanel>
                 </Grid>
 
                 <StackPanel Margin="0,0,0,16">
                     <TextBlock Text="Notes (optional)"
                                FontSize="12"
-                               Foreground="{StaticResource MutedForegroundBrush}" />
+                               Foreground="{DynamicResource TextSecondaryBrush}" />
                     <TextBox Text="{Binding Notes, UpdateSourceTrigger=PropertyChanged}"
                              Style="{StaticResource ModernTextBox}"
                              AcceptsReturn="True"
@@ -95,8 +119,8 @@
                              Height="90" />
                 </StackPanel>
 
-                <Border Background="#FFF4F6FF"
-                        BorderBrush="#FFE1E5FB"
+                <Border Background="{DynamicResource MutedBackgroundBrush}"
+                        BorderBrush="{DynamicResource DividerBrush}"
                         BorderThickness="1"
                         CornerRadius="12"
                         Padding="16"
@@ -111,35 +135,37 @@
                         <StackPanel Grid.Column="0">
                             <TextBlock Text="Daily rate"
                                        FontSize="12"
-                                       Foreground="{StaticResource MutedForegroundBrush}" />
+                                       Foreground="{DynamicResource TextSecondaryBrush}" />
                             <TextBlock Text="{Binding VehicleRateDisplay}"
                                        FontSize="16"
-                                       FontWeight="SemiBold" />
+                                       FontWeight="SemiBold"
+                                       Foreground="{DynamicResource TextPrimaryBrush}" />
                         </StackPanel>
 
                         <StackPanel Grid.Column="1">
                             <TextBlock Text="Duration"
                                        FontSize="12"
-                                       Foreground="{StaticResource MutedForegroundBrush}" />
+                                       Foreground="{DynamicResource TextSecondaryBrush}" />
                             <TextBlock Text="{Binding RentalDaysDisplay}"
                                        FontSize="16"
-                                       FontWeight="SemiBold" />
+                                       FontWeight="SemiBold"
+                                       Foreground="{DynamicResource TextPrimaryBrush}" />
                         </StackPanel>
 
                         <StackPanel Grid.Column="2">
                             <TextBlock Text="Total"
                                        FontSize="12"
-                                       Foreground="{StaticResource MutedForegroundBrush}" />
+                                       Foreground="{DynamicResource TextSecondaryBrush}" />
                             <TextBlock Text="{Binding TotalAmountDisplay}"
                                        FontSize="18"
                                        FontWeight="Bold"
-                                       Foreground="{StaticResource PrimaryBrush}" />
+                                       Foreground="{DynamicResource PrimaryBrush}" />
                         </StackPanel>
                     </Grid>
                 </Border>
 
                 <TextBlock Text="{Binding ErrorMessage}"
-                           Foreground="#FFB42323"
+                           Foreground="{DynamicResource DestructiveBrush}"
                            Visibility="{Binding ErrorMessage, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}}"
                            TextWrapping="Wrap"
                            Margin="0,0,0,12" />

@@ -57,9 +57,11 @@ namespace CarRentalManagment
                     services.AddTransient<ReportViolationViewModel>();
                     services.AddTransient<SettingsViewModel>();
                     services.AddTransient<AddVehicleViewModel>();
+                    services.AddTransient<EditVehicleViewModel>();
                     services.AddTransient<AdminVehicleManagementViewModel>();
                     services.AddTransient<AdminReservationManagementViewModel>();
                     services.AddTransient<AdminLocationManagementViewModel>();
+                    services.AddTransient<LocationEditorViewModel>();
                     services.AddTransient<AdminDiscountManagementViewModel>();
 
                     // Register MainViewModel with explicit factory dependencies

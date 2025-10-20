@@ -2,50 +2,51 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!-- Core palette translated from the web project (Tailwind design system) -->
-    <Color x:Key="PrimaryColor">#FF0D40A5</Color>
-    <Color x:Key="PrimaryHoverColor">#FF1550C9</Color>
+    <Color x:Key="PrimaryColor">#FF6366F1</Color>
+    <Color x:Key="PrimaryHoverColor">#FF4F46E5</Color>
     <Color x:Key="PrimaryForegroundColor">#FFFFFFFF</Color>
 
-    <Color x:Key="SecondaryColor">#FFF2805A</Color>
-    <Color x:Key="SecondaryForegroundColor">#FFFFFFFF</Color>
+    <Color x:Key="SecondaryColor">#FFF59E0B</Color>
+    <Color x:Key="SecondaryForegroundColor">#FF0B1120</Color>
 
-    <Color x:Key="AccentColor">#FFF2805A</Color>
-    <Color x:Key="AccentForegroundColor">#FFFFFFFF</Color>
+    <Color x:Key="AccentColor">#FF38BDF8</Color>
+    <Color x:Key="AccentForegroundColor">#FF0B1120</Color>
 
-    <Color x:Key="DestructiveColor">#FFDC2828</Color>
-    <Color x:Key="DestructiveForegroundColor">#FFFFFFFF</Color>
+    <Color x:Key="DestructiveColor">#FFEF4444</Color>
+    <Color x:Key="DestructiveForegroundColor">#FF0B1120</Color>
 
-    <Color x:Key="BackgroundColor">#FFFFFFFF</Color>
-    <Color x:Key="ForegroundColor">#FF1D2025</Color>
+    <Color x:Key="BackgroundColor">#FF0B1120</Color>
+    <Color x:Key="ForegroundColor">#FFE2E8F0</Color>
 
-    <Color x:Key="MutedBackgroundColor">#FFF1F2F4</Color>
-    <Color x:Key="MutedForegroundColor">#FF646E82</Color>
+    <Color x:Key="MutedBackgroundColor">#FF111C34</Color>
+    <Color x:Key="MutedForegroundColor">#FF94A3B8</Color>
 
-    <Color x:Key="CardBackgroundColor">#FFFFFFFF</Color>
-    <Color x:Key="CardForegroundColor">#FF1D2025</Color>
-    <Color x:Key="CardAltBackgroundColor">#FFF7F8FB</Color>
+    <Color x:Key="CardBackgroundColor">#FF111C34</Color>
+    <Color x:Key="CardForegroundColor">#FFE2E8F0</Color>
+    <Color x:Key="CardAltBackgroundColor">#FF1C2540</Color>
 
-    <Color x:Key="BorderColor">#FFE5E7EB</Color>
-    <Color x:Key="InputBackgroundColor">#FFFFFFFF</Color>
-    <Color x:Key="InputBorderColor">#FFE5E7EB</Color>
-    <Color x:Key="InputForegroundColor">#FF1D2025</Color>
+    <Color x:Key="BorderColor">#FF1F2A40</Color>
+    <Color x:Key="DividerColor">#FF243049</Color>
+    <Color x:Key="InputBackgroundColor">#FF0F172A</Color>
+    <Color x:Key="InputBorderColor">#FF2D3B55</Color>
+    <Color x:Key="InputForegroundColor">#FFE2E8F0</Color>
 
-    <Color x:Key="SidebarBackgroundColor">#FFFAFAFA</Color>
-    <Color x:Key="SidebarForegroundColor">#FF3F3F46</Color>
-    <Color x:Key="SidebarAccentColor">#FFE4E9F8</Color>
-    <Color x:Key="SidebarBorderColor">#FFE5E7EB</Color>
-    <Color x:Key="SidebarActiveColor">#FF0D40A5</Color>
+    <Color x:Key="SidebarBackgroundColor">#FF0B1322</Color>
+    <Color x:Key="SidebarForegroundColor">#FF94A3B8</Color>
+    <Color x:Key="SidebarAccentColor">#FF1F2A40</Color>
+    <Color x:Key="SidebarBorderColor">#FF1F2A40</Color>
+    <Color x:Key="SidebarActiveColor">#FF2563EB</Color>
     <Color x:Key="SidebarActiveForegroundColor">#FFFFFFFF</Color>
 
-    <Color x:Key="NavbarBackgroundColor">#FFFFFFFF</Color>
-    <Color x:Key="NavbarBorderColor">#FFE5E7EB</Color>
+    <Color x:Key="NavbarBackgroundColor">#FF0B1120</Color>
+    <Color x:Key="NavbarBorderColor">#FF1F2A40</Color>
 
-    <Color x:Key="OverlayColor">#330D1420</Color>
+    <Color x:Key="OverlayColor">#B30B1322</Color>
 
-    <Color x:Key="SuccessColor">#FF0EB57F</Color>
+    <Color x:Key="SuccessColor">#FF22C55E</Color>
     <Color x:Key="WarningColor">#FFF59E0B</Color>
-    <Color x:Key="ErrorColor">#FFDC2828</Color>
-    <Color x:Key="InfoColor">#FF1D4ED8</Color>
+    <Color x:Key="ErrorColor">#FFEF4444</Color>
+    <Color x:Key="InfoColor">#FF3B82F6</Color>
 
     <!-- Primary resources -->
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}" />
@@ -96,6 +97,7 @@
     <SolidColorBrush x:Key="InputBorderBrush" Color="{StaticResource InputBorderColor}" />
 
     <SolidColorBrush x:Key="BorderBrush" Color="{StaticResource BorderColor}" />
+    <SolidColorBrush x:Key="DividerBrush" Color="{StaticResource DividerColor}" />
 
     <!-- Status -->
     <SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource SuccessColor}" />
@@ -105,12 +107,12 @@
 
     <!-- Decorative -->
     <LinearGradientBrush x:Key="PrimaryGradientBrush" StartPoint="0,0" EndPoint="1,1">
-        <GradientStop Color="#FF0D40A5" Offset="0" />
-        <GradientStop Color="#FF2A69D8" Offset="1" />
+        <GradientStop Color="#FF4F46E5" Offset="0" />
+        <GradientStop Color="#FF6366F1" Offset="1" />
     </LinearGradientBrush>
 
     <LinearGradientBrush x:Key="AccentGradientBrush" StartPoint="0,0" EndPoint="1,1">
-        <GradientStop Color="#FFF2805A" Offset="0" />
-        <GradientStop Color="#FFF6A07A" Offset="1" />
+        <GradientStop Color="#FF38BDF8" Offset="0" />
+        <GradientStop Color="#FF0EA5E9" Offset="1" />
     </LinearGradientBrush>
 </ResourceDictionary>

@@ -14,6 +14,11 @@ namespace CarRentalManagment.Services
         private readonly IDatabaseService _databaseService;
         private readonly ILogger<ReservationService> _logger;
 
+        private readonly List<Reservation> _fallbackReservations = new();
+        private readonly object _syncRoot = new();
+        private long _nextReservationId = 1;
+        private bool _useFallbackStore;
+
         public ReservationService(IDatabaseService databaseService, ILogger<ReservationService> logger)
         {
             _databaseService = databaseService;
@@ -22,6 +27,11 @@ namespace CarRentalManagment.Services
 
         public async Task<IReadOnlyList<Reservation>> GetUserReservationsAsync(long userId, CancellationToken cancellationToken = default)
         {
+            if (_useFallbackStore)
+            {
+                return GetFallbackReservations(userId);
+            }
+
             const string query = @"SELECT id, user_id, vehicle_id, start_date, end_date, status, total_amount, notes,
                                          created_at, updated_at, cancelled_at, cancellation_reason
                                   FROM reservations
@@ -38,15 +48,20 @@ namespace CarRentalManagment.Services
                 var rows = await _databaseService.ExecuteQueryAsync(query, parameters, cancellationToken).ConfigureAwait(false);
                 return rows.Select(MapReservation).ToList();
             }
-            catch (Exception ex)
+            catch (Exception ex) when (ShouldUseFallback(ex))
             {
-                _logger.LogError(ex, "Failed to load reservations for user {UserId}", userId);
-                throw;
+                EnableFallback(ex);
+                return GetFallbackReservations(userId);
             }
         }
 
         public async Task<IReadOnlyList<Reservation>> GetAllAsync(CancellationToken cancellationToken = default)
         {
+            if (_useFallbackStore)
+            {
+                return GetFallbackReservations();
+            }
+
             const string query = @"SELECT id, user_id, vehicle_id, start_date, end_date, status, total_amount, notes,
                                          created_at, updated_at, cancelled_at, cancellation_reason
                                   FROM reservations";
@@ -56,10 +71,10 @@ namespace CarRentalManagment.Services
                 var rows = await _databaseService.ExecuteQueryAsync(query, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return rows.Select(MapReservation).ToList();
             }
-            catch (Exception ex)
+            catch (Exception ex) when (ShouldUseFallback(ex))
             {
-                _logger.LogError(ex, "Failed to load reservations");
-                throw;
+                EnableFallback(ex);
+                return GetFallbackReservations();
             }
         }
 
@@ -68,6 +83,11 @@ namespace CarRentalManagment.Services
             if (reservation == null)
             {
                 throw new ArgumentNullException(nameof(reservation));
+            }
+
+            if (_useFallbackStore)
+            {
+                return CreateFallbackReservation(reservation);
             }
 
             if (!await IsVehicleAvailableAsync(reservation.VehicleId, reservation.StartDate, reservation.EndDate, cancellationToken).ConfigureAwait(false))
@@ -96,13 +116,23 @@ namespace CarRentalManagment.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to create reservation for user {UserId}", reservation.UserId);
-                throw;
+                if (!ShouldUseFallback(ex))
+                {
+                    _logger.LogWarning(ex, "Database reservation creation failed. Falling back to in-memory store.");
+                }
+
+                EnableFallback(ex);
+                return CreateFallbackReservation(reservation);
             }
         }
 
         public async Task<bool> IsVehicleAvailableAsync(long vehicleId, DateTime startDate, DateTime endDate, CancellationToken cancellationToken = default)
         {
+            if (_useFallbackStore)
+            {
+                return IsVehicleAvailableFallback(vehicleId, startDate, endDate);
+            }
+
             const string query = @"SELECT COUNT(1)
                                   FROM reservations
                                   WHERE vehicle_id = @vehicleId
@@ -122,15 +152,20 @@ namespace CarRentalManagment.Services
                 var conflicts = await _databaseService.ExecuteScalarAsync<long?>(query, parameters, cancellationToken).ConfigureAwait(false);
                 return conflicts.GetValueOrDefault() == 0;
             }
-            catch (Exception ex)
+            catch (Exception ex) when (ShouldUseFallback(ex))
             {
-                _logger.LogError(ex, "Failed to check availability for vehicle {VehicleId}", vehicleId);
-                throw;
+                EnableFallback(ex);
+                return IsVehicleAvailableFallback(vehicleId, startDate, endDate);
             }
         }
 
         public async Task<bool> CancelAsync(long reservationId, string? reason = null, CancellationToken cancellationToken = default)
         {
+            if (_useFallbackStore)
+            {
+                return CancelFallbackReservation(reservationId, reason);
+            }
+
             const string command = @"UPDATE reservations
                                      SET status = 'CANCELLED',
                                          cancelled_at = @cancelledAt,
@@ -149,10 +184,10 @@ namespace CarRentalManagment.Services
                 var rowsAffected = await _databaseService.ExecuteNonQueryAsync(command, parameters, cancellationToken).ConfigureAwait(false);
                 return rowsAffected > 0;
             }
-            catch (Exception ex)
+            catch (Exception ex) when (ShouldUseFallback(ex))
             {
-                _logger.LogError(ex, "Failed to cancel reservation {ReservationId}", reservationId);
-                throw;
+                EnableFallback(ex);
+                return CancelFallbackReservation(reservationId, reason);
             }
         }
 
@@ -221,6 +256,112 @@ namespace CarRentalManagment.Services
             }
 
             return reservation;
+        }
+
+        private IReadOnlyList<Reservation> GetFallbackReservations(long? userId = null)
+        {
+            lock (_syncRoot)
+            {
+                IEnumerable<Reservation> query = _fallbackReservations;
+
+                if (userId.HasValue)
+                {
+                    query = query.Where(r => r.UserId == userId.Value);
+                }
+
+                return query.Select(CloneReservation).ToList();
+            }
+        }
+
+        private bool CreateFallbackReservation(Reservation reservation)
+        {
+            lock (_syncRoot)
+            {
+                if (!IsVehicleAvailableFallback(reservation.VehicleId, reservation.StartDate, reservation.EndDate))
+                {
+                    throw new InvalidOperationException("The vehicle is not available for the selected dates.");
+                }
+
+                var stored = CloneReservation(reservation);
+                stored.Id = _nextReservationId++;
+                var now = DateTime.UtcNow;
+                stored.CreatedAt = now;
+                stored.UpdatedAt = now;
+
+                _fallbackReservations.Add(stored);
+
+                reservation.Id = stored.Id;
+                reservation.CreatedAt = stored.CreatedAt;
+                reservation.UpdatedAt = stored.UpdatedAt;
+
+                return true;
+            }
+        }
+
+        private bool IsVehicleAvailableFallback(long vehicleId, DateTime startDate, DateTime endDate)
+        {
+            lock (_syncRoot)
+            {
+                return !_fallbackReservations.Any(r => r.VehicleId == vehicleId
+                    && (r.Status == ReservationStatus.Pending || r.Status == ReservationStatus.Confirmed)
+                    && r.StartDate < endDate
+                    && r.EndDate > startDate);
+            }
+        }
+
+        private bool CancelFallbackReservation(long reservationId, string? reason)
+        {
+            lock (_syncRoot)
+            {
+                var reservation = _fallbackReservations.FirstOrDefault(r => r.Id == reservationId);
+                if (reservation == null)
+                {
+                    return false;
+                }
+
+                reservation.Status = ReservationStatus.Cancelled;
+                reservation.CancellationReason = reason;
+                reservation.CancelledAt = DateTime.UtcNow;
+                reservation.UpdatedAt = reservation.CancelledAt.Value;
+                return true;
+            }
+        }
+
+        private static Reservation CloneReservation(Reservation source)
+        {
+            return new Reservation
+            {
+                Id = source.Id,
+                UserId = source.UserId,
+                VehicleId = source.VehicleId,
+                StartDate = source.StartDate,
+                EndDate = source.EndDate,
+                Status = source.Status,
+                TotalAmount = source.TotalAmount,
+                Notes = source.Notes,
+                CreatedAt = source.CreatedAt,
+                UpdatedAt = source.UpdatedAt,
+                CancelledAt = source.CancelledAt,
+                CancellationReason = source.CancellationReason
+            };
+        }
+
+        private bool ShouldUseFallback(Exception ex)
+        {
+            return ex is MySqlException
+                   || ex.InnerException is MySqlException
+                   || ex.Message.Contains("connect", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private void EnableFallback(Exception ex)
+        {
+            if (_useFallbackStore)
+            {
+                return;
+            }
+
+            _useFallbackStore = true;
+            _logger.LogWarning(ex, "Falling back to in-memory reservation store.");
         }
 
         private static TEnum ParseEnum<TEnum>(string? value) where TEnum : struct, Enum

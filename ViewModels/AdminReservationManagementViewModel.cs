@@ -168,6 +168,28 @@ namespace CarRentalManagment.ViewModels
             public string EndDateDisplay => EndDate.ToString("d", CultureInfo.CurrentCulture);
             public string TotalAmountDisplay => TotalAmount.ToString("C", CultureInfo.CurrentCulture);
 
+            public string ReservationNumberDisplay => $"Reservation #{Id:D6}";
+
+            public string VehicleDisplay => string.Format(CultureInfo.CurrentCulture, "Vehicle #{0}", VehicleId);
+
+            public string RentalPeriodDisplay => string.Format(
+                CultureInfo.CurrentCulture,
+                "{0:MMM d, yyyy} - {1:MMM d, yyyy}",
+                StartDate,
+                EndDate);
+
+            public string UserDisplay => string.Format(CultureInfo.CurrentCulture, "User #{0}", UserId);
+
+            public string DurationDisplay => DurationDays == 1
+                ? "1 day"
+                : string.Format(CultureInfo.CurrentCulture, "{0} days", DurationDays);
+
+            public bool HasNotes => !string.IsNullOrWhiteSpace(Notes);
+
+            public string NotesDisplay => HasNotes
+                ? Notes
+                : "No notes provided.";
+
             public string StatusDisplay
             {
                 get => _statusDisplay;
@@ -180,6 +202,9 @@ namespace CarRentalManagment.ViewModels
                 OnPropertyChanged(nameof(StartDateDisplay));
                 OnPropertyChanged(nameof(EndDateDisplay));
                 OnPropertyChanged(nameof(TotalAmountDisplay));
+                OnPropertyChanged(nameof(RentalPeriodDisplay));
+                OnPropertyChanged(nameof(DurationDisplay));
+                OnPropertyChanged(nameof(NotesDisplay));
             }
 
             private static string GetStatusText(ReservationStatus status)
