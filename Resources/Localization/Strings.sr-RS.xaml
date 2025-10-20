@@ -1,0 +1,97 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <!-- Navigation -->
+  <sys:String x:Key="Navigation_MenuToggle">Meni</sys:String>
+  <sys:String x:Key="Navigation_Menu">Meni</sys:String>
+  <sys:String x:Key="Navigation_Vehicles">Vozila</sys:String>
+  <sys:String x:Key="Navigation_Reservations">Rezervacije</sys:String>
+  <sys:String x:Key="Navigation_Feedback">Utisci</sys:String>
+  <sys:String x:Key="Navigation_Violations">Prekrsaji</sys:String>
+  <sys:String x:Key="Navigation_Settings">Podesavanja</sys:String>
+  <sys:String x:Key="Navigation_Logout">Odjava</sys:String>
+  <sys:String x:Key="Navigation_Admin">Administracija</sys:String>
+  <sys:String x:Key="Navigation_AdminReservations">Rezervacije (admin)</sys:String>
+  <sys:String x:Key="Navigation_AdminVehicles">Vozila (admin)</sys:String>
+  <sys:String x:Key="Navigation_AdminLocations">Lokacije</sys:String>
+  <sys:String x:Key="Navigation_AdminDiscounts">Popusti</sys:String>
+
+  <!-- Main layout -->
+  <sys:String x:Key="Main_WelcomeGuest">Dobrodosli</sys:String>
+  <sys:String x:Key="Main_WelcomeUser">Dobrodosli, {0}</sys:String>
+
+  <!-- Sections -->
+  <sys:String x:Key="Vehicles_Title">Vozila</sys:String>
+  <sys:String x:Key="Vehicles_Description">Pregledajte i upravljajte vozilima dostupnim za iznajmljivanje.</sys:String>
+  <sys:String x:Key="Vehicles_Subtitle">Pronadjite savrsen automobil za vase putovanje.</sys:String>
+  <sys:String x:Key="Vehicles_SearchPlaceholder">Pretrazi po marki ili modelu...</sys:String>
+  <sys:String x:Key="Vehicles_Filters">Filteri</sys:String>
+  <sys:String x:Key="Vehicles_Filter_Header">Filtriraj vozila</sys:String>
+  <sys:String x:Key="Vehicles_Filter_VehicleType">Tip vozila</sys:String>
+  <sys:String x:Key="Vehicles_Filter_Transmission">Menjac</sys:String>
+  <sys:String x:Key="Vehicles_Filter_PriceRange">Opseg cene (po danu)</sys:String>
+  <sys:String x:Key="Vehicles_Filter_SortBy">Sortiraj po</sys:String>
+  <sys:String x:Key="Vehicles_Filter_AllTypes">Svi tipovi</sys:String>
+  <sys:String x:Key="Vehicles_Filter_AllTransmissions">Svi menjaci</sys:String>
+  <sys:String x:Key="Vehicles_Filter_AllPrices">Sve cene</sys:String>
+  <sys:String x:Key="Vehicles_Sort_Recommended">Preporuceno</sys:String>
+  <sys:String x:Key="Vehicles_Sort_DailyRateLowHigh">Cena po danu (rastuce)</sys:String>
+  <sys:String x:Key="Vehicles_Sort_DailyRateHighLow">Cena po danu (opadajuce)</sys:String>
+  <sys:String x:Key="Vehicles_Sort_Newest">Najnovije</sys:String>
+  <sys:String x:Key="Vehicles_PriceRange_0_50">$0 - $50</sys:String>
+  <sys:String x:Key="Vehicles_PriceRange_51_100">$51 - $100</sys:String>
+  <sys:String x:Key="Vehicles_PriceRange_101_200">$101 - $200</sys:String>
+  <sys:String x:Key="Vehicles_PriceRange_201_Plus">$201+</sys:String>
+  <sys:String x:Key="Vehicles_ViewDetails">Detalji vozila</sys:String>
+  <sys:String x:Key="Vehicles_Loading">Ucitavanje vozila...</sys:String>
+  <sys:String x:Key="Vehicles_ClearSearch">Ocisti pretragu</sys:String>
+  <sys:String x:Key="Vehicles_NoPhoto">Fotografija nije dostupna</sys:String>
+  <sys:String x:Key="Vehicles_Empty_Title">Nema vozila koja odgovaraju filterima.</sys:String>
+  <sys:String x:Key="Vehicles_Empty_Description">Pokusajte da prilagodite filtere ili potrazite drugi model.</sys:String>
+  <sys:String x:Key="Vehicles_PerDay">po danu</sys:String>
+  <sys:String x:Key="Vehicles_SeatsLabel">Sedista</sys:String>
+  <sys:String x:Key="Vehicles_TransmissionLabel">Menjac</sys:String>
+  <sys:String x:Key="Vehicles_FuelLabel">Gorivo</sys:String>
+  <sys:String x:Key="Vehicles_CategoryLabel">Kategorija</sys:String>
+  <sys:String x:Key="Vehicles_StartingAt">Pocetna cena</sys:String>
+  <sys:String x:Key="Vehicles_ColorLabel">Boja</sys:String>
+  <sys:String x:Key="Vehicles_StatusLabel">Status</sys:String>
+  <sys:String x:Key="Vehicles_RegistrationLabel">Registracija</sys:String>
+  <sys:String x:Key="Vehicles_BookNow">Rezervisi</sys:String>
+  <sys:String x:Key="Vehicles_BookDisclaimer">* Konacna cena zavisi od trajanja najma i dodatnih usluga.</sys:String>
+  <sys:String x:Key="Vehicles_DescriptionHeading">Opis</sys:String>
+  <sys:String x:Key="Vehicles_SelectPrompt">Izaberite vozilo sa liste kako biste videli detalje.</sys:String>
+
+  <sys:String x:Key="Reservations_Title">Rezervacije</sys:String>
+  <sys:String x:Key="Reservations_Description">Kreirajte, upravljajte i pregledajte svoje planirane najmove.</sys:String>
+
+  <sys:String x:Key="Feedback_Title">Utisci</sys:String>
+  <sys:String x:Key="Feedback_Description">Podelite kako je proteklo putovanje kako bismo unapredili iskustvo.</sys:String>
+
+  <sys:String x:Key="Violations_Title">Prijava prekrsaja</sys:String>
+  <sys:String x:Key="Violations_Description">Obavestite nas o problemima sa rezervacijom kako bismo brzo reagovali.</sys:String>
+
+  <sys:String x:Key="Settings_Title">Podesavanja</sys:String>
+  <sys:String x:Key="Settings_Description">Prilagodite izgled, ponasanje i jezik aplikacije.</sys:String>
+
+  <sys:String x:Key="AdminReservations_Title">Upravljanje rezervacijama</sys:String>
+  <sys:String x:Key="AdminReservations_Description">Pratite sve rezervacije i resavajte eskalacije.</sys:String>
+  <sys:String x:Key="AdminVehicles_Title">Upravljanje vozilima</sys:String>
+  <sys:String x:Key="AdminVehicles_Description">Kontrolisite status, cene i dostupnost voznog parka.</sys:String>
+  <sys:String x:Key="AdminLocations_Title">Lokacije</sys:String>
+  <sys:String x:Key="AdminLocations_Description">Konfigurisite filijale i mesta preuzimanja.</sys:String>
+  <sys:String x:Key="AdminDiscounts_Title">Programi popusta</sys:String>
+  <sys:String x:Key="AdminDiscounts_Description">Pokrenite i pratite promotivne ponude.</sys:String>
+
+  <sys:String x:Key="Admin_Summary_TotalVehicles">Ukupno vozila</sys:String>
+  <sys:String x:Key="Admin_Summary_ActiveReservations">Aktivne rezervacije</sys:String>
+  <sys:String x:Key="Admin_Summary_Utilization">Iskoriscenost</sys:String>
+  <sys:String x:Key="Admin_Action_Refresh">Osvezi</sys:String>
+  <sys:String x:Key="Admin_Table_NoData">Nema dostupnih zapisa.</sys:String>
+  <sys:String x:Key="Admin_Discounts_Empty">Jos nema programa popusta.</sys:String>
+  <sys:String x:Key="Admin_Locations_Empty">Jos nema definisanih lokacija.</sys:String>
+
+  <!-- Language options -->
+  <sys:String x:Key="Language_English">Engleski</sys:String>
+  <sys:String x:Key="Language_Serbian">Srpski</sys:String>
+  <sys:String x:Key="Admin_Status_Active">Aktivan</sys:String>
+  <sys:String x:Key="Admin_Status_Inactive">Neaktivan</sys:String>
+</ResourceDictionary>

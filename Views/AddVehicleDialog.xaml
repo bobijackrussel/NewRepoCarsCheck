@@ -1,0 +1,203 @@
+<Window x:Class="CarRentalManagment.Views.AddVehicleDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converters="clr-namespace:CarRentalManagment.Utilities.Converters"
+        mc:Ignorable="d"
+        Title="Add vehicle"
+        WindowStartupLocation="CenterOwner"
+        SizeToContent="WidthAndHeight"
+        ResizeMode="NoResize"
+        Background="{StaticResource MutedBackgroundBrush}"
+        d:DesignWidth="600"
+        d:DesignHeight="720">
+
+    <Window.Resources>
+        <converters:StringNullOrEmptyToVisibilityConverter x:Key="StringNullOrEmptyToVisibilityConverter" />
+    </Window.Resources>
+
+    <Border Background="White"
+            CornerRadius="16"
+            Padding="28"
+            BorderBrush="#FFE1E5FB"
+            BorderThickness="1">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <TextBlock Text="Add a new vehicle"
+                           FontSize="24"
+                           FontWeight="Bold"
+                           Foreground="{StaticResource ForegroundBrush}" />
+                <TextBlock Text="Provide the details for the vehicle you want to add to the fleet."
+                           Margin="0,6,0,20"
+                           Foreground="{StaticResource MutedForegroundBrush}" />
+
+                <Grid Margin="0,0,0,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Left column -->
+                    <StackPanel Grid.Column="0" Grid.Row="0" Margin="0,0,16,16">
+                        <TextBlock Text="Make"
+                                   FontSize="12"
+                                   Foreground="{StaticResource MutedForegroundBrush}" />
+                        <TextBox Style="{StaticResource ModernTextBox}"
+                                 Text="{Binding Vehicle.Make, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="0" Grid.Row="1" Margin="0,0,16,16">
+                        <TextBlock Text="Model"
+                                   FontSize="12"
+                                   Foreground="{StaticResource MutedForegroundBrush}" />
+                        <TextBox Style="{StaticResource ModernTextBox}"
+                                 Text="{Binding Vehicle.Model, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="0" Grid.Row="2" Margin="0,0,16,16">
+                        <TextBlock Text="Model year"
+                                   FontSize="12"
+                                   Foreground="{StaticResource MutedForegroundBrush}" />
+                        <TextBox Style="{StaticResource ModernTextBox}"
+                                 Text="{Binding Vehicle.ModelYear, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="0" Grid.Row="3" Margin="0,0,16,0">
+                        <TextBlock Text="VIN"
+                                   FontSize="12"
+                                   Foreground="{StaticResource MutedForegroundBrush}" />
+                        <TextBox Style="{StaticResource ModernTextBox}"
+                                 Text="{Binding Vehicle.Vin, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+
+                    <!-- Right column -->
+                    <StackPanel Grid.Column="1" Grid.Row="0" Margin="16,0,0,16">
+                        <TextBlock Text="Plate number"
+                                   FontSize="12"
+                                   Foreground="{StaticResource MutedForegroundBrush}" />
+                        <TextBox Style="{StaticResource ModernTextBox}"
+                                 Text="{Binding Vehicle.PlateNumber, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Grid.Row="1" Margin="16,0,0,16">
+                        <TextBlock Text="Daily rate"
+                                   FontSize="12"
+                                   Foreground="{StaticResource MutedForegroundBrush}" />
+                        <TextBox Style="{StaticResource ModernTextBox}"
+                                 Text="{Binding Vehicle.DailyRate, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Grid.Row="2" Margin="16,0,0,16">
+                        <TextBlock Text="Color"
+                                   FontSize="12"
+                                   Foreground="{StaticResource MutedForegroundBrush}" />
+                        <TextBox Style="{StaticResource ModernTextBox}"
+                                 Text="{Binding Vehicle.Color, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Grid.Row="3" Margin="16,0,0,0">
+                        <TextBlock Text="Status"
+                                   FontSize="12"
+                                   Foreground="{StaticResource MutedForegroundBrush}" />
+                        <ComboBox ItemsSource="{Binding Statuses}"
+                                  SelectedItem="{Binding Vehicle.Status}"
+                                  Style="{StaticResource ModernComboBox}" />
+                    </StackPanel>
+                </Grid>
+
+                <Grid Margin="0,0,0,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Margin="0,0,16,0">
+                        <TextBlock Text="Category"
+                                   FontSize="12"
+                                   Foreground="{StaticResource MutedForegroundBrush}" />
+                        <ComboBox ItemsSource="{Binding Categories}"
+                                  SelectedItem="{Binding Vehicle.Category}"
+                                  Style="{StaticResource ModernComboBox}" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Margin="0,0,16,0">
+                        <TextBlock Text="Transmission"
+                                   FontSize="12"
+                                   Foreground="{StaticResource MutedForegroundBrush}" />
+                        <ComboBox ItemsSource="{Binding Transmissions}"
+                                  SelectedItem="{Binding Vehicle.Transmission}"
+                                  Style="{StaticResource ModernComboBox}" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Fuel type"
+                                   FontSize="12"
+                                   Foreground="{StaticResource MutedForegroundBrush}" />
+                        <ComboBox ItemsSource="{Binding FuelTypes}"
+                                  SelectedItem="{Binding Vehicle.Fuel}"
+                                  Style="{StaticResource ModernComboBox}" />
+                    </StackPanel>
+                </Grid>
+
+                <Grid Margin="0,0,0,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Margin="0,0,16,0">
+                        <TextBlock Text="Seats"
+                                   FontSize="12"
+                                   Foreground="{StaticResource MutedForegroundBrush}" />
+                        <TextBox Style="{StaticResource ModernTextBox}"
+                                 Text="{Binding Vehicle.Seats, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Text="Doors"
+                                   FontSize="12"
+                                   Foreground="{StaticResource MutedForegroundBrush}" />
+                        <TextBox Style="{StaticResource ModernTextBox}"
+                                 Text="{Binding Vehicle.Doors, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                </Grid>
+
+                <StackPanel Margin="0,0,0,20">
+                    <TextBlock Text="Description"
+                               FontSize="12"
+                               Foreground="{StaticResource MutedForegroundBrush}" />
+                    <TextBox Style="{StaticResource ModernTextBox}"
+                             Text="{Binding Vehicle.Description, UpdateSourceTrigger=PropertyChanged}"
+                             AcceptsReturn="True"
+                             TextWrapping="Wrap"
+                             Height="100" />
+                </StackPanel>
+
+                <TextBlock Text="{Binding ErrorMessage}"
+                           Foreground="#FFB42323"
+                           Visibility="{Binding ErrorMessage, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}}"
+                           TextWrapping="Wrap"
+                           Margin="0,0,0,12" />
+
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+                    <Button Content="Cancel"
+                            Command="{Binding CancelCommand}"
+                            Style="{StaticResource ModernOutlineButton}" />
+                    <Button Content="Save vehicle"
+                            Command="{Binding SaveCommand}"
+                            Style="{StaticResource ModernPrimaryButton}"
+                            Margin="12,0,0,0" />
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Border>
+</Window>

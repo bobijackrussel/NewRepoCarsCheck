@@ -1,0 +1,187 @@
+<UserControl x:Class="CarRentalManagment.Views.SignupView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:behaviors="clr-namespace:CarRentalManagment.Utilities.Behaviors"
+             xmlns:converters="clr-namespace:CarRentalManagment.Utilities.Converters"
+             xmlns:viewModels="clr-namespace:CarRentalManagment.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewModels:SignupViewModel}"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="900">
+
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converters:StringNullOrEmptyToVisibilityConverter x:Key="StringNullOrEmptyToVisibilityConverter" />
+    </UserControl.Resources>
+
+    <Grid Background="#1e1e2f">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="3*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Left Panel - Branding -->
+        <Border Grid.Column="0"
+                Background="#24243e"
+                Padding="40">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="Join Us Today"
+                           FontSize="28"
+                           FontWeight="Bold"
+                           Foreground="White"
+                           TextWrapping="Wrap" />
+                <TextBlock Text="Create your account and start managing your car rentals efficiently."
+                           FontSize="14"
+                           Foreground="#cfcfe0"
+                           TextWrapping="Wrap"
+                           Margin="0,16,0,0" />
+                <TextBlock Text="It only takes a minute!"
+                           FontSize="13"
+                           Foreground="#9a9ab5"
+                           Margin="0,8,0,0" />
+            </StackPanel>
+        </Border>
+
+        <!-- Right Panel - Signup Form -->
+        <Border Grid.Column="1"
+                Background="White"
+                CornerRadius="20,0,0,20"
+                Margin="0,30,30,30"
+                Padding="40">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!-- Header -->
+                <StackPanel Grid.Row="0">
+                    <TextBlock Text="Create Account"
+                               FontSize="24"
+                               FontWeight="Bold"
+                               Foreground="#262645" />
+                    <TextBlock Text="Fill in your details below"
+                               FontSize="14"
+                               Foreground="#6b6b8a"
+                               Margin="0,4,0,0" />
+                </StackPanel>
+
+                <!-- Form -->
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,20,0,20">
+                    <StackPanel>
+                        <!-- Name Fields -->
+                        <Grid Margin="0,0,0,16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="12" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="First Name *"
+                                           Foreground="#555"
+                                           Margin="0,0,0,4" />
+                                <TextBox Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}"
+                                         Padding="8"
+                                         Style="{StaticResource RoundedTextBoxStyle}" />
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Last Name"
+                                           Foreground="#555"
+                                           Margin="0,0,0,4" />
+                                <TextBox Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}"
+                                         Padding="8"
+                                         Style="{StaticResource RoundedTextBoxStyle}" />
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- Email Field -->
+                        <TextBlock Text="Email *"
+                                   Foreground="#555"
+                                   Margin="0,0,0,4" />
+                        <TextBox Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"
+                                 Padding="8"
+                                 Style="{StaticResource RoundedTextBoxStyle}"
+                                 Margin="0,0,0,16" />
+
+                        <!-- Password Field -->
+                        <TextBlock Text="Password *"
+                                   Foreground="#555"
+                                   Margin="0,0,0,4" />
+                        <PasswordBox Padding="8"
+                                     Style="{StaticResource RoundedPasswordBoxStyle}"
+                                     behaviors:PasswordBoxHelper.BindPassword="True"
+                                     behaviors:PasswordBoxHelper.BoundPassword="{Binding Password, Mode=TwoWay}"
+                                     Margin="0,0,0,4" />
+                        <TextBlock Text="Minimum 6 characters"
+                                   FontSize="11"
+                                   Foreground="#9a9ab5"
+                                   Margin="0,0,0,16" />
+
+                        <!-- Confirm Password Field -->
+                        <TextBlock Text="Confirm Password *"
+                                   Foreground="#555"
+                                   Margin="0,0,0,4" />
+                        <PasswordBox Padding="8"
+                                     Style="{StaticResource RoundedPasswordBoxStyle}"
+                                     behaviors:PasswordBoxHelper.BindPassword="True"
+                                     behaviors:PasswordBoxHelper.BoundPassword="{Binding ConfirmPassword, Mode=TwoWay}"
+                                     Margin="0,0,0,16" />
+
+                        <!-- Error Message -->
+                        <Border Background="#ffe5e5"
+                                Padding="12"
+                                CornerRadius="8"
+                                Margin="0,0,0,16"
+                                Visibility="{Binding ErrorMessage, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}}">
+                            <TextBlock Text="{Binding ErrorMessage}"
+                                       Foreground="#d64545"
+                                       TextWrapping="Wrap" />
+                        </Border>
+
+                        <!-- Success Message -->
+                        <Border Background="#e5f5e5"
+                                Padding="12"
+                                CornerRadius="8"
+                                Margin="0,0,0,16"
+                                Visibility="{Binding SuccessMessage, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}}">
+                            <TextBlock Text="{Binding SuccessMessage}"
+                                       Foreground="#28a745"
+                                       TextWrapping="Wrap" />
+                        </Border>
+
+                        <!-- Sign Up Button -->
+                        <Button Content="Create Account"
+                                Command="{Binding SignUpCommand}"
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                Height="40"
+                                FontSize="14"
+                                FontWeight="SemiBold" />
+
+                        <!-- Loading Indicator -->
+                        <TextBlock Text="Creating your account..."
+                                   Foreground="#4e63ff"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,12,0,0"
+                                   Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Footer -->
+                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Text="Already have an account?"
+                               Foreground="#6b6b8a"
+                               VerticalAlignment="Center"
+                               Margin="0,0,8,0" />
+                    <Button Content="Sign In"
+                            Command="{Binding NavigateToLoginCommand}"
+                            Style="{StaticResource SecondaryButtonStyle}"
+                            Padding="12,6" />
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

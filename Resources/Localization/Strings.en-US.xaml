@@ -1,0 +1,99 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <!-- Navigation -->
+  <sys:String x:Key="Navigation_MenuToggle">Menu</sys:String>
+  <sys:String x:Key="Navigation_Menu">Menu</sys:String>
+  <sys:String x:Key="Navigation_Vehicles">Vehicles</sys:String>
+  <sys:String x:Key="Navigation_Reservations">Reservations</sys:String>
+  <sys:String x:Key="Navigation_Feedback">Feedback</sys:String>
+  <sys:String x:Key="Navigation_Violations">Report Violation</sys:String>
+  <sys:String x:Key="Navigation_Settings">Settings</sys:String>
+  <sys:String x:Key="Navigation_Logout">Logout</sys:String>
+  <sys:String x:Key="Navigation_Admin">Administration</sys:String>
+  <sys:String x:Key="Navigation_AdminReservations">Reservation Management</sys:String>
+  <sys:String x:Key="Navigation_AdminVehicles">Vehicle Management</sys:String>
+  <sys:String x:Key="Navigation_AdminLocations">Locations</sys:String>
+  <sys:String x:Key="Navigation_AdminDiscounts">Discounts</sys:String>
+
+  <!-- Main layout -->
+  <sys:String x:Key="Main_WelcomeGuest">Welcome</sys:String>
+  <sys:String x:Key="Main_WelcomeUser">Welcome, {0}</sys:String>
+
+  <!-- Sections -->
+  <sys:String x:Key="Vehicles_Title">Vehicles</sys:String>
+  <sys:String x:Key="Vehicles_Description">Browse and manage the vehicles available for rent.</sys:String>
+  <sys:String x:Key="Vehicles_Subtitle">Find the perfect car for your journey.</sys:String>
+  <sys:String x:Key="Vehicles_SearchPlaceholder">Search by make or model...</sys:String>
+  <sys:String x:Key="Vehicles_Filters">Filters</sys:String>
+  <sys:String x:Key="Vehicles_Filter_Header">Filter Vehicles</sys:String>
+  <sys:String x:Key="Vehicles_Filter_VehicleType">Vehicle Type</sys:String>
+  <sys:String x:Key="Vehicles_Filter_Transmission">Transmission</sys:String>
+  <sys:String x:Key="Vehicles_Filter_PriceRange">Price Range (per day)</sys:String>
+  <sys:String x:Key="Vehicles_Filter_SortBy">Sort By</sys:String>
+  <sys:String x:Key="Vehicles_Filter_AllTypes">All types</sys:String>
+  <sys:String x:Key="Vehicles_Filter_AllTransmissions">All transmissions</sys:String>
+  <sys:String x:Key="Vehicles_Filter_AllPrices">All prices</sys:String>
+  <sys:String x:Key="Vehicles_Sort_Recommended">Recommended</sys:String>
+  <sys:String x:Key="Vehicles_Sort_DailyRateLowHigh">Daily rate (low to high)</sys:String>
+  <sys:String x:Key="Vehicles_Sort_DailyRateHighLow">Daily rate (high to low)</sys:String>
+  <sys:String x:Key="Vehicles_Sort_Newest">Newest added</sys:String>
+  <sys:String x:Key="Vehicles_PriceRange_0_50">$0 - $50</sys:String>
+  <sys:String x:Key="Vehicles_PriceRange_51_100">$51 - $100</sys:String>
+  <sys:String x:Key="Vehicles_PriceRange_101_200">$101 - $200</sys:String>
+  <sys:String x:Key="Vehicles_PriceRange_201_Plus">$201+</sys:String>
+  <sys:String x:Key="Vehicles_ViewDetails">View Details</sys:String>
+  <sys:String x:Key="Vehicles_Loading">Loading vehicles...</sys:String>
+  <sys:String x:Key="Vehicles_ClearSearch">Clear search</sys:String>
+  <sys:String x:Key="Vehicles_NoPhoto">No photo available</sys:String>
+  <sys:String x:Key="Vehicles_Empty_Title">No vehicles match your filters.</sys:String>
+  <sys:String x:Key="Vehicles_Empty_Description">Try adjusting filters or search for a different make or model.</sys:String>
+  <sys:String x:Key="Vehicles_PerDay">per day</sys:String>
+  <sys:String x:Key="Vehicles_SeatsLabel">Seats</sys:String>
+  <sys:String x:Key="Vehicles_TransmissionLabel">Transmission</sys:String>
+  <sys:String x:Key="Vehicles_FuelLabel">Fuel type</sys:String>
+  <sys:String x:Key="Vehicles_CategoryLabel">Category</sys:String>
+  <sys:String x:Key="Vehicles_StartingAt">Starting at</sys:String>
+  <sys:String x:Key="Vehicles_ColorLabel">Color</sys:String>
+  <sys:String x:Key="Vehicles_StatusLabel">Status</sys:String>
+  <sys:String x:Key="Vehicles_RegistrationLabel">Registration</sys:String>
+  <sys:String x:Key="Vehicles_BookNow">Book now</sys:String>
+  <sys:String x:Key="Vehicles_BookDisclaimer">* Final price may vary based on rental duration and additional services.</sys:String>
+  <sys:String x:Key="Vehicles_DescriptionHeading">Description</sys:String>
+  <sys:String x:Key="Vehicles_SelectPrompt">Select a vehicle from the list to view its details.</sys:String>
+
+  <sys:String x:Key="Reservations_Title">Reservations</sys:String>
+  <sys:String x:Key="Reservations_Description">Create, manage, and review your upcoming rentals.</sys:String>
+
+  <sys:String x:Key="Feedback_Title">Leave Feedback</sys:String>
+  <sys:String x:Key="Feedback_Description">Share how your trip went so we can continue improving every experience.</sys:String>
+
+  <sys:String x:Key="Violations_Title">Report Violation</sys:String>
+  <sys:String x:Key="Violations_Description">Let us know about any issues with your reservation so our team can follow up quickly.</sys:String>
+
+  <sys:String x:Key="Settings_Title">Settings</sys:String>
+  <sys:String x:Key="Settings_Description">Customize how the app looks, feels, and communicates with you.</sys:String>
+
+  <sys:String x:Key="AdminReservations_Title">Reservation Management</sys:String>
+  <sys:String x:Key="AdminReservations_Description">Monitor every reservation and handle escalations.</sys:String>
+  <sys:String x:Key="AdminVehicles_Title">Vehicle Management</sys:String>
+  <sys:String x:Key="AdminVehicles_Description">Oversee fleet status, pricing, and availability.</sys:String>
+  <sys:String x:Key="AdminLocations_Title">Locations</sys:String>
+  <sys:String x:Key="AdminLocations_Description">Configure branches and pickup points.</sys:String>
+  <sys:String x:Key="AdminDiscounts_Title">Discount Programs</sys:String>
+  <sys:String x:Key="AdminDiscounts_Description">Launch and track promotional offers.</sys:String>
+
+  <sys:String x:Key="Admin_Summary_TotalVehicles">Total Vehicles</sys:String>
+  <sys:String x:Key="Admin_Summary_ActiveReservations">Active Reservations</sys:String>
+  <sys:String x:Key="Admin_Summary_Utilization">Utilization</sys:String>
+  <sys:String x:Key="Admin_Action_Refresh">Refresh</sys:String>
+  <sys:String x:Key="Admin_Table_NoData">No records available.</sys:String>
+  <sys:String x:Key="Admin_Discounts_Empty">No discount programs created yet.</sys:String>
+  <sys:String x:Key="Admin_Locations_Empty">No branch locations recorded yet.</sys:String>
+
+  <!-- Language options -->
+  <sys:String x:Key="Language_English">English</sys:String>
+  <sys:String x:Key="Language_Serbian">Serbian</sys:String>
+  <sys:String x:Key="Admin_Status_Active">Active</sys:String>
+  <sys:String x:Key="Admin_Status_Inactive">Inactive</sys:String>
+</ResourceDictionary>

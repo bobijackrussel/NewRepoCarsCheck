@@ -1,0 +1,395 @@
+<UserControl x:Class="CarRentalManagment.Views.VehicleDetailsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:CarRentalManagment.Utilities.Converters"
+             mc:Ignorable="d"
+             d:DesignHeight="900"
+             d:DesignWidth="1000"
+             Background="#FF1A1D2E">
+
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
+        <converters:StringNullOrEmptyToVisibilityConverter x:Key="StringNullOrEmptyToVisibilityConverter" />
+
+        <!-- Book Now Button Style -->
+        <Style x:Key="BookNowButton" TargetType="Button">
+            <Setter Property="Background" Value="#FF4F6EFF" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="0,16" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="12"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                            VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FF5F7EFF" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <!-- Back Button -->
+        <Button
+                Background="#FF2A2F47"
+                Foreground="White"
+                FontSize="16"
+                FontWeight="SemiBold"
+                Padding="20,12"
+                BorderThickness="0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="40,20,0,0"
+                Cursor="Hand"
+                Panel.ZIndex="1000"
+                Command="{Binding BackCommand}"
+                Visibility="{Binding HasVehicle, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="&#xE72B;"
+                           FontFamily="Segoe MDL2 Assets"
+                           FontSize="18"
+                           Foreground="White"
+                           Margin="0,0,8,0" />
+                <TextBlock Text="Back to vehicles"
+                           FontSize="16"
+                           Foreground="White" />
+            </StackPanel>
+        </Button>
+
+        <TextBlock Text="No vehicle selected"
+                   FontSize="32"
+                   Foreground="White"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Visibility="{Binding HasVehicle, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled"
+                      Visibility="{Binding HasVehicle, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid Margin="40,30,40,40">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!-- Hero Image Section -->
+                <Border Grid.Row="0"
+                        Height="400"
+                        CornerRadius="20"
+                        ClipToBounds="True"
+                        Background="#FF252941"
+                        Margin="0,0,0,32">
+                    <Grid>
+                        <Image Source="{Binding SelectedPhotoUrl}"
+                               Stretch="UniformToFill" />
+
+                        <!-- No Photo Placeholder -->
+                        <StackPanel VerticalAlignment="Center"
+                                   HorizontalAlignment="Center">
+                            <StackPanel.Style>
+                                <Style TargetType="StackPanel">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding SelectedPhotoUrl}" Value="{x:Null}">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding SelectedPhotoUrl}" Value="">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </StackPanel.Style>
+                            <TextBlock Text="&#xEB9F;"
+                                       FontFamily="Segoe MDL2 Assets"
+                                       FontSize="48"
+                                       Foreground="#FF4B5563"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,0,0,12" />
+                            <TextBlock Text="No image available"
+                                       FontSize="16"
+                                       Foreground="#FF6B7280"
+                                       HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Photo Thumbnails -->
+                <ItemsControl ItemsSource="{Binding Photos}"
+                             Grid.Row="0"
+                             VerticalAlignment="Bottom"
+                             Margin="40,-70,40,32">
+                    <ItemsControl.Style>
+                        <Style TargetType="ItemsControl">
+                            <Setter Property="Visibility" Value="Visible" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Photos.Count}" Value="0">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ItemsControl.Style>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Width="100"
+                                    Height="75"
+                                    Background="#FF252941"
+                                    CornerRadius="12"
+                                    Margin="0,0,12,0"
+                                    Cursor="Hand"
+                                    BorderThickness="3"
+                                    BorderBrush="Transparent">
+                                <Border.InputBindings>
+                                    <MouseBinding MouseAction="LeftClick" 
+                                                  Command="{Binding DataContext.SelectPhotoCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                  CommandParameter="{Binding}" />
+                                </Border.InputBindings>
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="BorderBrush" Value="Transparent" />
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="BorderBrush" Value="#FF4F6EFF" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                                <Image Source="{Binding Url}"
+                                       Stretch="UniformToFill"
+                                       ClipToBounds="True" />
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <!-- Content Section -->
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="400" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Left Side - Vehicle Details -->
+                    <StackPanel Grid.Column="0"
+                               Margin="0,0,40,0">
+                        <!-- Title -->
+                        <!-- Specs Grid -->
+                        <Border Background="#FF252941"
+                                CornerRadius="16"
+                                Padding="28"
+                                >
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Seats -->
+                                <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,0,24">
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                        <TextBlock Text="&#xE7C4;"
+                                                   FontFamily="Segoe MDL2 Assets"
+                                                   FontSize="18"
+                                                   Foreground="#FF4F6EFF"
+                                                   VerticalAlignment="Center"
+                                                   Margin="0,0,8,0" />
+                                        <TextBlock Text="Seats"
+                                                   FontSize="13"
+                                                   Foreground="#FF9BA3B4"
+                                                   VerticalAlignment="Center" />
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding Vehicle.Seats}"
+                                               FontSize="20"
+                                               FontWeight="SemiBold"
+                                               Foreground="White" />
+                                </StackPanel>
+
+                                <!-- Transmission -->
+                                <StackPanel Grid.Row="0" Grid.Column="1" Margin="0,0,0,24">
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                        <TextBlock Text="&#xE7C8;"
+                                                   FontFamily="Segoe MDL2 Assets"
+                                                   FontSize="18"
+                                                   Foreground="#FF4F6EFF"
+                                                   VerticalAlignment="Center"
+                                                   Margin="0,0,8,0" />
+                                        <TextBlock Text="Transmission"
+                                                   FontSize="13"
+                                                   Foreground="#FF9BA3B4"
+                                                   VerticalAlignment="Center" />
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding Vehicle.TransmissionDisplay}"
+                                               FontSize="20"
+                                               FontWeight="SemiBold"
+                                               Foreground="White" />
+                                </StackPanel>
+
+                                <!-- Fuel Type -->
+                                <StackPanel Grid.Row="1" Grid.Column="0">
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                        <TextBlock Text="&#xE7C7;"
+                                                   FontFamily="Segoe MDL2 Assets"
+                                                   FontSize="18"
+                                                   Foreground="#FF4F6EFF"
+                                                   VerticalAlignment="Center"
+                                                   Margin="0,0,8,0" />
+                                        <TextBlock Text="Fuel Type"
+                                                   FontSize="13"
+                                                   Foreground="#FF9BA3B4"
+                                                   VerticalAlignment="Center" />
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding Vehicle.FuelDisplay}"
+                                               FontSize="20"
+                                               FontWeight="SemiBold"
+                                               Foreground="White" />
+                                </StackPanel>
+
+                                <!-- Type -->
+                                <StackPanel Grid.Row="1" Grid.Column="1">
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                        <TextBlock Text="&#xE7C5;"
+                                                   FontFamily="Segoe MDL2 Assets"
+                                                   FontSize="18"
+                                                   Foreground="#FF4F6EFF"
+                                                   VerticalAlignment="Center"
+                                                   Margin="0,0,8,0" />
+                                        <TextBlock Text="Type"
+                                                   FontSize="13"
+                                                   Foreground="#FF9BA3B4"
+                                                   VerticalAlignment="Center" />
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding Vehicle.CategoryDisplay}"
+                                               FontSize="20"
+                                               FontWeight="SemiBold"
+                                               Foreground="White" />
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <!-- Title -->
+                        <TextBlock Text="{Binding Vehicle.DisplayName}"
+                                   FontSize="32"
+                                   FontWeight="Bold"
+                                   Foreground="White"
+                                   Margin="0,0,0,8" />
+                        <TextBlock Text="Description"
+                                   FontSize="20"
+                                   FontWeight="SemiBold"
+                                   Foreground="White"
+                                   />
+
+                        <!-- Subtitle -->
+                        <TextBlock Text="{Binding Vehicle.Subtitle}"
+                                   FontSize="16"
+                                   Foreground="#FF9BA3B4"
+                                   Margin="0,0,0,32" />
+                        <Border Background="#FF252941"
+                                CornerRadius="16"
+                                Padding="28">
+                            <TextBlock Text="{Binding Vehicle.Description}"
+                                       FontSize="15"
+                                       Foreground="#FF9BA3B4"
+                                       TextWrapping="Wrap"
+                                       LineHeight="24" />
+                        </Border>
+
+                        <!-- Description Section -->
+                    </StackPanel>
+
+                    <!-- Right Side - Booking Card -->
+                    <Border Grid.Column="1"
+                            Background="#FF252941"
+                            CornerRadius="20"
+                            Padding="32"
+                            VerticalAlignment="Top">
+                        <StackPanel>
+                            <!-- Price Section -->
+                            <TextBlock Text="Starting at"
+                                       FontSize="14"
+                                       Foreground="#FF9BA3B4"
+                                       Margin="0,0,0,8" />
+
+                            <TextBlock Text="per day"
+                                       FontSize="14"
+                                       Foreground="#FF9BA3B4"
+                                       Margin="0,0,0,24" />
+
+                            <!-- Separator -->
+                            <Border Height="1"
+                                    Background="#FF3A3F5C"
+                                    Margin="0,0,0,24" />
+
+                            <!-- Additional Info -->
+                            <StackPanel Margin="0,0,0,16">
+                                <TextBlock Text="Color"
+                                           FontSize="13"
+                                           Foreground="#FF9BA3B4"
+                                           Margin="0,0,0,6" />
+                                <TextBlock Text="{Binding Vehicle.Color}"
+                                           FontSize="16"
+                                           FontWeight="SemiBold"
+                                           Foreground="White" />
+                            </StackPanel>
+
+                            <StackPanel Margin="0,0,0,16">
+                                <TextBlock Text="Status"
+                                           FontSize="13"
+                                           Foreground="#FF9BA3B4"
+                                           Margin="0,0,0,6" />
+                            </StackPanel>
+
+                            <StackPanel Margin="0,0,0,24">
+                                <TextBlock Text="Registration"
+                                           FontSize="13"
+                                           Foreground="#FF9BA3B4"
+                                           Margin="0,0,0,6" />
+                                <TextBlock Text="{Binding Vehicle.PlateNumber}"
+                                           FontSize="16"
+                                           FontWeight="SemiBold"
+                                           Foreground="White" />
+                            </StackPanel>
+
+                            <!-- Book Button -->
+                            <Button Content="Book Now"
+                                    Style="{StaticResource BookNowButton}"
+                                    Command="{Binding ReserveCommand}" />
+
+                            <!-- Info Text -->
+                            <TextBlock Text="* Final price may vary based on rental duration and additional services"
+                                       FontSize="11"
+                                       Foreground="#FF6B7280"
+                                       TextWrapping="Wrap"
+                                       TextAlignment="Center"
+                                       Margin="0,16,0,0" />
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Grid>
+        </ScrollViewer>
+
+
+    </Grid>
+</UserControl>
